@@ -80,13 +80,13 @@
 
 # --- Section overrides ----------------------------------------------------
 
-1        # Utility
-1        # Level-1v kernels
-1        # Level-1m
+0        # Utility
+0        # Level-1v kernels
+0        # Level-1m
 1        # Level-1f kernels
-1        # Level-2
-1        # Level-3 micro-kernels
-1        # Level-3
+0        # Level-2
+0        # Level-3 micro-kernels
+0        # Level-3
 
 
 # --- Utility --------------------------------------------------------------
@@ -102,12 +102,12 @@
 
 # --- Level-1v -------------------------------------------------------------
 
-1        # addv
+0        # addv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ?        #   parameters: conjx
 
-1        # axpbyv
+0        # axpbyv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ?        #   parameters: conjx
@@ -117,7 +117,7 @@
 -1       #   dimensions: m
 ?        #   parameters: conjx
 
-1        # copyv
+0        # copyv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ?        #   parameters: conjx
@@ -127,35 +127,35 @@
 -1       #   dimensions: m
 ??       #   parameters: conjx conjy
 
-1        # dotxv
+0        # dotxv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ??       #   parameters: conjx conjy
 
-1        # normfv
+0        # normfv
 1        #   test sequential front-end
 -1       #   dimensions: m
 
-1        # scalv
+0        # scalv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ?        #   parameters: conjbeta
 
-1        # scal2v
+0        # scal2v
 1        #   test sequential front-end
 -1       #   dimensions: m
 ?        #   parameters: conjx
 
-1        # setv
+0        # setv
 1        #   test sequential front-end
 -1       #   dimensions: m
 
-1        # subv
+0        # subv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ?        #   parameters: conjx
 
-1        # xpbyv
+0        # xpbyv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ?        #   parameters: conjx
@@ -204,12 +204,12 @@
 
 # --- Level-1f kernels -----------------------------------------------------
 
-1        # axpy2v
+0        # axpy2v
 1        #   test sequential front-end
 -1       #   dimensions: m
 ??       #   parameters: conjx conjy
 
-1        # dotaxpyv
+0        # dotaxpyv
 1        #   test sequential front-end
 -1       #   dimensions: m
 ???      #   parameters: conjxt conjx conjy
@@ -224,7 +224,7 @@
 -1       #   dimensions: m
 ??       #   parameters: conjat conjx
 
-1        # dotxaxpyf
+0        # dotxaxpyf
 1        #   test sequential front-end
 -1       #   dimensions: m
 ????     #   parameters: conjat conja conjw conjx
@@ -306,47 +306,47 @@
 -1 -1 -1 #   dimensions: m n k
 ??       #   parameters: transa transb
 
-1        # hemm
+0        # hemm
 1        #   test sequential front-end
 -1 -1    #   dimensions: m n
 ????     #   parameters: side uploa conja transb
 
-1        # herk
+0        # herk
 1        #   test sequential front-end
 -1 -1    #   dimensions: m k
 ??       #   parameters: uploc transa
 
-1        # her2k
+0        # her2k
 1        #   test sequential front-end
 -1 -1    #   dimensions: m k
 ???      #   parameters: uploc transa transb
 
-1        # symm
+0        # symm
 1        #   test sequential front-end
 -1 -1    #   dimensions: m n
 ????     #   parameters: side uploa conja transb
 
-1        # syrk
+0        # syrk
 1        #   test sequential front-end
 -1 -1    #   dimensions: m k
 ??       #   parameters: uploc transa
 
-1        # syr2k
+0        # syr2k
 1        #   test sequential front-end
 -1 -1    #   dimensions: m k
 ???      #   parameters: uploc transa transb
 
-1        # trmm
+0        # trmm
 1        #   test sequential front-end
 -1 -1    #   dimensions: m n
 ????     #   parameters: side uploa transa diaga
 
-1        # trmm3
+0        # trmm3
 1        #   test sequential front-end
 -1 -1    #   dimensions: m n
 ????n    #   parameters: side uploa transa diaga transb
 
-1        # trsm
+0        # trsm
 1        #   test sequential front-end
 -1 -1    #   dimensions: m n
 ????     #   parameters: side uploa transa diaga

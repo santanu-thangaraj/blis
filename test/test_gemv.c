@@ -34,7 +34,7 @@
 
 #include <unistd.h>
 #include "blis.h"
-
+#include "mkl.h"
 //           transa m     n     alpha    a        lda   x        incx  beta     y        incy
 //void dgemv_( char*, int*, int*, double*, double*, int*, double*, int*, double*, double*, int* );
 
@@ -52,6 +52,7 @@ int main( int argc, char** argv )
 	num_t dt_a, dt_x, dt_y;
 	num_t dt_alpha, dt_beta;
 	int   r, n_repeats;
+	num_t dt;
 
 	double dtime;
 	double dtime_save;
@@ -59,7 +60,7 @@ int main( int argc, char** argv )
 
 	bli_init();
 
-	n_repeats = 3;
+	n_repeats = 100;
 
 #ifndef PRINT
 	p_begin = 40;
@@ -77,7 +78,12 @@ int main( int argc, char** argv )
 	n_input = 15;
 #endif
 
-	dt_a = dt_x = dt_y = dt_alpha = dt_beta = BLIS_DOUBLE;
+#if 1
+ 	dt = BLIS_DOUBLE;
+#else
+	dt = BLIS_FLOAT;
+#endif
+	dt_a = dt_x = dt_y = dt_alpha = dt_beta = dt;
 
 	for ( p = p_begin; p <= p_end; p += p_inc )
 	{
@@ -130,27 +136,56 @@ int main( int argc, char** argv )
 			          &beta,
 			          &y );
 #else
+			if ( bli_is_float( dt ) )
+			{
 
-			f77_char transa = 'N';
-			f77_int  mm     = bli_obj_length( a );
-			f77_int  nn     = bli_obj_width( a );
-			f77_int  lda    = bli_obj_col_stride( a );
-			f77_int  incx   = bli_obj_vector_inc( x );
-			f77_int  incy   = bli_obj_vector_inc( y );
-			double*  alphap = bli_obj_buffer( alpha );
-			double*  ap     = bli_obj_buffer( a );
-			double*  xp     = bli_obj_buffer( x );
-			double*  betap  = bli_obj_buffer( beta );
-			double*  yp     = bli_obj_buffer( y );
+				f77_char transa = 'N';
+				f77_int  mm     = bli_obj_length( a );
+				f77_int  nn     = bli_obj_width( a );
+				f77_int  lda    = bli_obj_col_stride( a );
+				f77_int  incx   = bli_obj_vector_inc( x );
+				f77_int  incy   = bli_obj_vector_inc( y );
+				float*  alphap = bli_obj_buffer( alpha );
+				float*  ap     = bli_obj_buffer( a );
+				float*  xp     = bli_obj_buffer( x );
+				float*  betap  = bli_obj_buffer( beta );
+				float*  yp     = bli_obj_buffer( y );
 
-			dgemv_( &transa,
-			        &mm,
-			        &nn,
-			        alphap,
-			        ap, &lda,
-			        xp, &incx,
-			        betap,
-			        yp, &incy );
+				sgemv_( &transa,
+				        &mm,
+				        &nn,
+				        alphap,
+				        ap, &lda,
+				        xp, &incx,
+				        betap,
+				        yp, &incy );
+//				cblas_sgemv(CblasColMajor, CblasNoTrans, mm, nn, *alphap, ap, lda,  xp, incx,  *betap, yp, incy);				
+			}
+			else if( bli_is_double( dt ) )
+			{
+				f77_char transa = 'N';
+				f77_int  mm     = bli_obj_length( a );
+				f77_int  nn     = bli_obj_width( a );
+				f77_int  lda    = bli_obj_col_stride( a );
+				f77_int  incx   = bli_obj_vector_inc( x );
+				f77_int  incy   = bli_obj_vector_inc( y );
+				double*  alphap = bli_obj_buffer( alpha );
+				double*  ap     = bli_obj_buffer( a );
+				double*  xp     = bli_obj_buffer( x );
+				double*  betap  = bli_obj_buffer( beta );
+				double*  yp     = bli_obj_buffer( y );
+
+				dgemv_( &transa,
+				        &mm,
+				        &nn,
+				        alphap,
+				        ap, &lda,
+				        xp, &incx,
+				        betap,
+				        yp, &incy );
+
+//      		        cblas_dgemv(CblasColMajor, CblasNoTrans, mm, nn, *alphap, ap, lda,  xp, incx,  *betap, yp, incy);
+			}
 #endif
 
 #ifdef PRINT
